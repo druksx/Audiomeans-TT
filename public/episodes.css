@@ -36,6 +36,17 @@
     padding: 10px 0;
 }
 
+.podcast-searchbar {
+    width: 250px;
+    margin: 10px 0 0 10px;
+    height: 35px;
+    border: none;
+    border-radius: 10px;
+    outline: none;
+    text-indent: 10px;
+}
+
+
 .podcast-informations {
     height: 100%;
     width: 15%;

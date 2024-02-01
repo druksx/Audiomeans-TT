@@ -135,6 +135,26 @@ function displayEpisodes() {
         });
 }
 
+function searchForEpisode() {
+    let episodes = document.getElementsByClassName('episode-card');
+    let searchBar = document.getElementById('podcast-searchbar');
+    searchBar.addEventListener('keyup', function() {
+        let searchValue = searchBar.value.toLowerCase();
+        if (searchValue === '') {
+            displayEpisodes();
+        } else {
+            for (let i = 0; i < episodes.length; i++) {
+                let title = episodes[i].querySelector('.title').textContent.toLowerCase();
+                if (title.includes(searchValue)) {
+                    episodes[i].style.display = 'block';
+                } else {
+                    episodes[i].style.display = 'none';
+                }
+            }
+        }
+    });
+}
+
 function displayPodcastImage() {
     let urlParams = new URLSearchParams(window.location.search);
     let podcastId = urlParams.get('podcast_id');
@@ -181,6 +201,7 @@ function displayPodcastTitle() {
         });
 }
 
+searchForEpisode();
 displayPodcastTitle();
 displayPodcastImage();
 displayEpisodes();
