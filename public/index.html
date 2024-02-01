@@ -3,20 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="podcasts.css">
     <title>AudioMeans TT</title>
 </head>
-
 <body>
-    <form id="podcast-form">
-        <label for="title">Podcast Title:</label><br>
-        <input type="text" id="title" name="title"><br>
-        <label for="image_url">Image URL:</label><br>
-        <input type="text" id="image_url" name="image_url"><br>
-        <input type="submit" value="Submit">
-    </form>
+    <div id="overlay" style="display: none;">
+        <div id="podcast-form-popup" style="display: none;">
+            <form id="podcast-form">
+                <p class="popup-text">Créez un podcast.</p>
+                <label for="title">Titre du Podcast</label>
+                <input class="podcast-field" type="text" id="title" name="title">
+                <label for="image_url">URL de l'image</label>
+                <input class="podcast-field" type="text" id="image_url" name="image_url">
+                <input class="submit" style="width: 80px;"type="submit" value="Submit">
+            </form>
+            <button id="close-form-button">X</button>
+        </div>
+    </div>
+    <nav class="topbar">
+        <img class="logo" src="https://assets-global.website-files.com/601bc34348f7a38be5d9ccbd/62dfe2f74b787cb9b096736a_Logo-NoTagline-Vertical-Blue.png" alt="AMLogo">
+        <button id="open-form-button">+</button>
+    </nav>
     <div id="podcast-container"></div>
     <script src="script.js"></script>
-</body>
+    <script>
+        document.getElementById('open-form-button').addEventListener('click', function() {
+            this.style.display = 'none';
+            document.getElementById('overlay').style.display = 'flex';
+            document.getElementById('podcast-form-popup').style.display = 'flex';
+        });
 
+        document.getElementById('overlay').addEventListener('click', function(event) {
+            if (event.target === this) {
+                this.style.display = 'none';
+                document.getElementById('podcast-form-popup').style.display = 'none';
+                document.getElementById('open-form-button').style.display = 'inline-block';
+            }
+        });
+
+        document.getElementById('podcast-form').addEventListener('click', function(event) {
+            event.stopPropagation();
+        });
+
+        document.getElementById('close-form-button').addEventListener('click', function() {
+            document.getElementById('overlay').style.display = 'none';
+            document.getElementById('podcast-form-popup').style.display = 'none';
+            document.getElementById('open-form-button').style.display = 'inline-block';
+        });
+    </script>
+</body>
 </html>

@@ -1,30 +1,13 @@
-document.addEventListener('DOMContentLoaded', function () {
-    function fetchPodcasts() {
-        fetch('/podcasts')
-            .then((response) => response.json())
-            .then((podcasts) => {
-                console.log('Podcasts:', podcasts);
-            })
-            .catch((error) => console.error('Error fetching podcasts:', error));
-    }
-
-    function fetchEpisodes() {
-        fetch('/episodes')
-            .then((response) => response.json())
-            .then((episodes) => {
-                console.log('Episodes:', episodes);
-            })
-            .catch((error) => console.error('Error fetching episodes:', error));
-    }
-    fetchPodcasts();
-    fetchEpisodes();
-});
-
 document.getElementById('podcast-form').addEventListener('submit', function (event) {
     event.preventDefault();
 
     const title = document.getElementById('title').value;
     const image_url = document.getElementById('image_url').value;
+
+    if (!title || !image_url) {
+        alert('Veuillez remplir tous les champs');
+        return;
+    }
 
     fetch('/podcasts', {
         method: 'POST',
@@ -34,7 +17,10 @@ document.getElementById('podcast-form').addEventListener('submit', function (eve
         body: JSON.stringify({ title, image_url }),
     })
         .then(response => response.json())
-        .then(data => console.log(data))
+        .then(data => {
+            window.location.href = '/index.html';
+            console.log(data);
+        })
         .catch((error) => console.error('Error:', error));
 });
 
@@ -43,17 +29,25 @@ function displayPodcasts() {
         .then(response => response.json())
         .then(podcasts => {
             const podcastContainer = document.getElementById('podcast-container');
+            podcastContainer.innerHTML = '';
             podcasts.forEach(podcast => {
                 const card = document.createElement('div');
                 card.className = 'podcast-card';
                 card.innerHTML = `
-              <h2>${podcast.title}</h2>
-              <img src="${podcast.image_url}" alt="${podcast.title}">
-              <button class="delete-button" data-id="${podcast.id}">Delete</button>
+                <div class="podcast-infos">
+                    <div class="image-container">
+                        <a class="redirect" href="podcast.html?podcast_id=${podcast.id}">
+                            <img src="${podcast.image_url}" alt="${podcast.title}">
+                        </a>
+                    </div>
+                    <div class="podcast-title">
+                        <h2 style="margin-top: 10px;">${podcast.title}</h2 >
+                    </div>
+                </div>
+                <div class="delete-container">
+                    <button class="delete-button" data-id="${podcast.id}">Supprimer</button>
+                </div>
             `;
-                card.addEventListener('click', function() {
-                    window.location.href = `podcast.html?podcast_id=${podcast.id}`;
-                });
                 card.querySelector('.delete-button').addEventListener('click', () => {
                     fetch(`/podcasts/${podcast.id}`, {
                         method: 'DELETE',

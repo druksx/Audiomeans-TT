@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vos Episodes</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="episodes.css">
+</head>
+<body>
+    <nav class="topbar">
+        <a href="index.html">
+            <img class="logo" src="https://assets-global.website-files.com/601bc34348f7a38be5d9ccbd/62dfe2f74b787cb9b096736a_Logo-NoTagline-Vertical-Blue.png" alt="AMLogo">
+        </a>
+    </nav>
+    <div class="container">
+        <div class="podcast-informations">
+            <img class="podcast-image" alt="podcast image"/>
+            <p class="podcast-title"></p>
+        </div>
+        <div id="episodes-container"></div>
+        <div class="form-container">
+            <form id="episode-form"> 
+                <br><p class="form-title" style="font-weight: bold; font-size: 35px;">Créez un épisode</p><br>
+                <label for="title">Titre de l'épisode</label>
+                <input class="ep-field" type="text" name="title" id="title">
+                <label for="desc">Description de l'épisode</label>
+                <input class="ep-field" type="text" name="desc" id="desc">
+                <label for="published_at">Date de publication</label>
+                <input class="date-field" type="date" name="published_at" id="published_at">
+                <label for="audio_url">URL de l'audio</label>
+                <input class="ep-field" type="text" name="audio_url" id="audio_url">
+                <input type="submit" class="submit" value="Submit">
+            </form>
+        </div>
+    </div>
+    <script src="episodes.js"></script>
+</body>
+</html>

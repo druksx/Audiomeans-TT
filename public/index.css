@@ -1,0 +1,28 @@
+:root {
+    --dark-grey: #1e1e1e;
+    --lighter-grey: #2e2e2e;
+    --light-grey: #3e3e3e;
+    --white: white;
+    --black: black;
+    --medium-spring-green: #00e08d;
+    --tomato: #ff4141;
+    --transparent-black: rgba(0, 0, 0, 0.5);
+    --bleu-audiomeans: #00aeff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'M PLUS 1p', sans-serif;
+    background-color: var(--dark-grey);
+    height: 100vh;
+    width: 100vw;
+    overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}

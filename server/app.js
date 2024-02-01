@@ -1,7 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const db = require('./db');
-
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -17,13 +16,26 @@ app.get('/podcasts', (req, res) => {
     });
 });
 
-app.get('/episodes', (req, res) => {
-    db.all('SELECT * FROM episodes', (err, episodes) => {
+app.get('/podcasts/:id', (req, res) => {
+    db.get('SELECT * FROM podcasts WHERE id = ?', req.params.id, (err, podcast) => {
         if (err) {
             res.status(500).json({ error: err.message });
             return;
         }
-        res.json(episodes);
+        res.json(podcast);
+    });
+});
+
+app.get('/episodes', (req, res) => {
+    const podcast_id = req.query.podcast_id;
+
+    const sql = 'SELECT * FROM episodes WHERE podcast_id = ?';
+
+    db.all(sql, [podcast_id], (err, rows) => {
+        if (err) {
+            return res.status(500).json({ error: err.message });
+        }
+        res.json(rows);
     });
 });
 
@@ -57,6 +69,16 @@ app.post('/episodes', (req, res) => {
             });
         }
     );
+});
+
+app.delete('/episodes/:id', (req, res) => {
+    db.run('DELETE FROM episodes WHERE id = ?', req.params.id, function (err) {
+        if (err) {
+            res.status(500).json({ error: err.message });
+            return;
+        }
+        res.json({ message: `Episode ${req.params.id} deleted successfully` });
+    });
 });
 
 app.delete('/podcasts/:id', (req, res) => {
